@@ -273,6 +273,16 @@ function escapeHtml(value=""){
   return String(value).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));
 }
 
-const { data:{ session } }=await supabase.auth.getSession();
-currentUser=session?.user||null;
-renderAuthState();
+async function initApp(){
+  try{
+    const { data, error } = await supabase.auth.getSession();
+    if(error) throw error;
+    currentUser = data?.session?.user || null;
+    await renderAuthState();
+  }catch(err){
+    console.error("Erro ao iniciar o aplicativo:", err);
+    toast("Não foi possível conectar ao Supabase. Atualize a página e tente novamente.", true);
+  }
+}
+
+initApp();
