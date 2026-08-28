@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Meu Plano Financeiro</title>
   <meta name="description" content="Gestão financeira pessoal com receitas, despesas, metas e comprovantes." />
-  <link rel="stylesheet" href="./styles.css?v=3" />
+  <link rel="stylesheet" href="./styles.css?v=4" />
 </head>
 <body>
   <div id="toast"></div>
@@ -244,8 +244,25 @@
     </form>
   </dialog>
 
+  <script>
+    (function(){
+      const loginBtn=document.getElementById("tabLogin");
+      const signupBtn=document.getElementById("tabSignup");
+      const loginForm=document.getElementById("loginForm");
+      const signupForm=document.getElementById("signupForm");
+      function show(tab){
+        const login=tab==="login";
+        loginBtn.classList.toggle("active",login);
+        signupBtn.classList.toggle("active",!login);
+        loginForm.classList.toggle("hidden",!login);
+        signupForm.classList.toggle("hidden",login);
+      }
+      loginBtn.addEventListener("click",()=>show("login"));
+      signupBtn.addEventListener("click",()=>show("signup"));
+    })();
+  </script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="./supabase-config.js?v=3"></script>
-  <script src="./app.js?v=3"></script>
+  <script src="./supabase-config.js?v=4"></script>
+  <script src="./app.js?v=4"></script>
 </body>
 </html>

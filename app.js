@@ -1,3 +1,4 @@
+(()=>{
 const $ = (id) => document.getElementById(id);
 const money = (v=0) => new Intl.NumberFormat("pt-BR",{style:"currency",currency:"BRL"}).format(Number(v)||0);
 const today = new Date().toISOString().slice(0,10);
@@ -294,3 +295,5 @@ async function initApp(){
 }
 
 initApp();
+
+})();
