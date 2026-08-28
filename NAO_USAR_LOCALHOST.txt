@@ -1,0 +1,1 @@
+Esta versão foi preparada para publicação online no GitHub Pages. Não use ABRIR_SITE.bat e não use localhost.

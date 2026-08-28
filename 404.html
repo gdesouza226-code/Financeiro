@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Meu Plano Financeiro</title>
+  <meta name="description" content="Gestão financeira pessoal com receitas, despesas, metas e comprovantes." />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <div id="toast"></div>
+
+  <section id="authView" class="auth-shell">
+    <div class="brand-panel">
+      <div class="brand-badge">MPF</div>
+      <h1>Meu Plano Financeiro</h1>
+      <p>Controle receitas, despesas, metas e comprovantes em um só lugar.</p>
+      <ul>
+        <li>Login individual por e-mail e senha</li>
+        <li>Dados separados por usuário</li>
+        <li>Upload de foto ou comprovante</li>
+        <li>Resumo mensal em tempo real</li>
+      </ul>
+    </div>
+
+    <div class="auth-card">
+      <div class="tabs">
+        <button id="tabLogin" class="tab active">Entrar</button>
+        <button id="tabSignup" class="tab">Criar conta</button>
+      </div>
+
+      <form id="loginForm" class="form">
+        <label>E-mail
+          <input id="loginEmail" type="email" required placeholder="voce@email.com" />
+        </label>
+        <label>Senha
+          <input id="loginPassword" type="password" required minlength="6" placeholder="••••••••" />
+        </label>
+        <button class="primary" type="submit">Entrar</button>
+      </form>
+
+      <form id="signupForm" class="form hidden">
+        <label>Nome
+          <input id="signupName" type="text" required placeholder="Seu nome" />
+        </label>
+        <label>E-mail
+          <input id="signupEmail" type="email" required placeholder="voce@email.com" />
+        </label>
+        <label>Senha
+          <input id="signupPassword" type="password" required minlength="6" placeholder="Mínimo 6 caracteres" />
+        </label>
+        <button class="primary" type="submit">Criar conta</button>
+      </form>
+
+      <p class="small muted">Os dados ficam armazenados no seu projeto Supabase.</p>
+    </div>
+  </section>
+
+  <section id="appView" class="hidden">
+    <aside class="sidebar">
+      <div class="logo-wrap">
+        <div class="brand-badge small-badge">MPF</div>
+        <div>
+          <strong>Meu Plano</strong>
+          <small>Financeiro</small>
+        </div>
+      </div>
+
+      <nav>
+        <button class="nav-btn active" data-view="dashboard">Visão geral</button>
+        <button class="nav-btn" data-view="movements">Movimentações</button>
+        <button class="nav-btn" data-view="goals">Metas</button>
+        <button class="nav-btn" data-view="profile">Minha conta</button>
+      </nav>
+
+      <div class="sidebar-bottom">
+        <div id="userEmail" class="user-email"></div>
+        <button id="logoutBtn" class="ghost">Sair</button>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div>
+          <h2 id="pageTitle">Visão geral</h2>
+          <p id="pageSubtitle">Acompanhe sua vida financeira em tempo real.</p>
+        </div>
+        <button id="newMovementBtn" class="primary">+ Nova movimentação</button>
+      </header>
+
+      <section id="dashboardView" class="view">
+        <div class="cards">
+          <article class="metric">
+            <span>Saldo atual</span>
+            <strong id="balanceValue">R$ 0,00</strong>
+          </article>
+          <article class="metric">
+            <span>Receitas do mês</span>
+            <strong id="incomeValue">R$ 0,00</strong>
+          </article>
+          <article class="metric">
+            <span>Despesas do mês</span>
+            <strong id="expenseValue">R$ 0,00</strong>
+          </article>
+          <article class="metric">
+            <span>Economia do mês</span>
+            <strong id="savingsValue">R$ 0,00</strong>
+          </article>
+        </div>
+
+        <div class="grid-2">
+          <article class="panel">
+            <div class="panel-head">
+              <div>
+                <h3>Últimas movimentações</h3>
+                <p>Seus lançamentos mais recentes.</p>
+              </div>
+            </div>
+            <div id="recentList" class="list"></div>
+          </article>
+
+          <article class="panel">
+            <div class="panel-head">
+              <div>
+                <h3>Distribuição de despesas</h3>
+                <p>Por categoria no mês atual.</p>
+              </div>
+            </div>
+            <div id="categoryList" class="list"></div>
+          </article>
+        </div>
+      </section>
+
+      <section id="movementsView" class="view hidden">
+        <article class="panel">
+          <div class="panel-head stack-mobile">
+            <div>
+              <h3>Movimentações</h3>
+              <p>Receitas e despesas registradas.</p>
+            </div>
+            <div class="filters">
+              <select id="filterType">
+                <option value="">Todos os tipos</option>
+                <option value="income">Receitas</option>
+                <option value="expense">Despesas</option>
+              </select>
+              <input id="filterMonth" type="month" />
+            </div>
+          </div>
+          <div id="movementList" class="list"></div>
+        </article>
+      </section>
+
+      <section id="goalsView" class="view hidden">
+        <div class="grid-2">
+          <article class="panel">
+            <h3>Nova meta</h3>
+            <form id="goalForm" class="form compact">
+              <label>Nome da meta
+                <input id="goalName" required placeholder="Ex.: Reserva de emergência" />
+              </label>
+              <label>Valor desejado
+                <input id="goalTarget" required type="number" min="0" step="0.01" />
+              </label>
+              <label>Valor já guardado
+                <input id="goalCurrent" required type="number" min="0" step="0.01" value="0" />
+              </label>
+              <label>Prazo
+                <input id="goalDate" type="date" />
+              </label>
+              <button class="primary" type="submit">Salvar meta</button>
+            </form>
+          </article>
+
+          <article class="panel">
+            <h3>Minhas metas</h3>
+            <div id="goalList" class="list"></div>
+          </article>
+        </div>
+      </section>
+
+      <section id="profileView" class="view hidden">
+        <article class="panel narrow">
+          <h3>Minha conta</h3>
+          <p class="muted">Seu acesso é protegido pela autenticação do Supabase.</p>
+          <div class="profile-line"><span>E-mail</span><strong id="profileEmail"></strong></div>
+          <div class="profile-line"><span>Nome</span><strong id="profileName"></strong></div>
+        </article>
+      </section>
+    </main>
+  </section>
+
+  <dialog id="movementDialog">
+    <form id="movementForm" class="modal-form">
+      <div class="modal-head">
+        <div>
+          <h3>Nova movimentação</h3>
+          <p>Adicione o gasto ou receita e, se quiser, envie uma foto do comprovante.</p>
+        </div>
+        <button type="button" id="closeDialog" class="icon-btn">×</button>
+      </div>
+
+      <div class="segmented">
+        <label><input type="radio" name="movementType" value="expense" checked /> Despesa</label>
+        <label><input type="radio" name="movementType" value="income" /> Receita</label>
+      </div>
+
+      <div class="form-grid">
+        <label>Descrição
+          <input id="movementDescription" required placeholder="Ex.: Mercado" />
+        </label>
+        <label>Valor
+          <input id="movementAmount" required type="number" min="0.01" step="0.01" />
+        </label>
+        <label>Categoria
+          <select id="movementCategory" required>
+            <option value="Alimentação">Alimentação</option>
+            <option value="Moradia">Moradia</option>
+            <option value="Transporte">Transporte</option>
+            <option value="Saúde">Saúde</option>
+            <option value="Educação">Educação</option>
+            <option value="Lazer">Lazer</option>
+            <option value="Salário">Salário</option>
+            <option value="Investimentos">Investimentos</option>
+            <option value="Outros">Outros</option>
+          </select>
+        </label>
+        <label>Data
+          <input id="movementDate" required type="date" />
+        </label>
+      </div>
+
+      <label>Observação
+        <textarea id="movementNotes" rows="3" placeholder="Opcional"></textarea>
+      </label>
+
+      <label class="upload-box">
+        <input id="movementReceipt" type="file" accept="image/*,application/pdf" />
+        <span>Anexar foto ou comprovante</span>
+        <small>JPG, PNG ou PDF</small>
+      </label>
+
+      <button class="primary" type="submit">Salvar movimentação</button>
+    </form>
+  </dialog>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="./supabase-config.js"></script>
+  <script src="./app.js"></script>
+</body>
+</html>

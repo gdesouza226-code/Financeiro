@@ -1,0 +1,83 @@
+MEU PLANO FINANCEIRO — VERSÃO ONLINE
+=========================================
+
+ESTA VERSÃO É DO MESMO TIPO DO PORTAL DE TREINAMENTOS
+-----------------------------------------------------
+- Não usa localhost.
+- Não precisa de Python.
+- Não precisa deixar janela preta aberta.
+- Pode ser publicado no GitHub Pages.
+- O banco e os comprovantes ficam no Supabase.
+- O usuário acessa por um link em qualquer computador ou celular.
+
+SUPABASE JÁ CONFIGURADO
+-----------------------
+Projeto:
+https://jtebbrkntdcpfgtsdpbh.supabase.co
+
+A chave pública já está no arquivo:
+supabase-config.js
+
+O SQL de criação das tabelas já foi executado no seu Supabase.
+Não execute novamente se tudo já foi criado corretamente.
+
+COMO PUBLICAR NO GITHUB PAGES
+-----------------------------
+1. Entre no GitHub.
+2. Crie um repositório novo, por exemplo:
+   meu-plano-financeiro
+3. Entre no repositório.
+4. Clique em "Add file" > "Upload files".
+5. Envie TODOS os arquivos desta pasta, sem colocar outra pasta por cima:
+   - index.html
+   - 404.html
+   - styles.css
+   - app.js
+   - supabase-config.js
+   - SUPABASE_SETUP.sql
+6. Clique em "Commit changes".
+7. Vá em Settings.
+8. No menu esquerdo, clique em Pages.
+9. Em "Build and deployment":
+   Source: Deploy from a branch
+   Branch: main
+   Pasta: / (root)
+10. Clique em Save.
+11. Aguarde alguns minutos.
+12. O GitHub mostrará o endereço público do site.
+
+O endereço normalmente ficará parecido com:
+https://SEU-USUARIO.github.io/meu-plano-financeiro/
+
+IMPORTANTE — SUPABASE AUTH
+--------------------------
+Depois que o GitHub gerar o link público:
+1. Copie o endereço completo do GitHub Pages.
+2. No Supabase, vá em:
+   Authentication > URL Configuration
+3. Em Site URL, coloque o endereço público do GitHub Pages.
+4. Em Redirect URLs, adicione o mesmo endereço, de preferência também:
+   https://SEU-USUARIO.github.io/meu-plano-financeiro/**
+5. Salve.
+
+LOGIN
+-----
+Cada pessoa cria a própria conta por e-mail e senha.
+As políticas RLS do Supabase mantêm:
+- movimentações separadas por usuário
+- metas separadas por usuário
+- comprovantes privados de cada usuário
+
+ARQUIVOS DE COMPROVANTE
+-----------------------
+Fotos e PDFs enviados pelo sistema são armazenados no bucket privado:
+receipts
+
+NUNCA COLOQUE NO SITE
+---------------------
+- senha do PostgreSQL
+- service_role key
+- senha pessoal do Supabase
+
+A chave publishable/anon que está no arquivo é apropriada para o frontend,
+desde que as políticas RLS permaneçam ativadas.
