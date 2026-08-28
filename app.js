@@ -1,5 +1,3 @@
-const supabase = window.supabase.createClient(window.SUPABASE_CONFIG.url, window.SUPABASE_CONFIG.anonKey);
-
 const $ = (id) => document.getElementById(id);
 const money = (v=0) => new Intl.NumberFormat("pt-BR",{style:"currency",currency:"BRL"}).format(Number(v)||0);
 const today = new Date().toISOString().slice(0,10);
@@ -26,6 +24,16 @@ function setAuthTab(tab){
 
 $("tabLogin").onclick=()=>setAuthTab("login");
 $("tabSignup").onclick=()=>setAuthTab("signup");
+
+if (!window.supabase) {
+  toast("Falha ao carregar a biblioteca do Supabase. Atualize a página.", true);
+  throw new Error("Supabase JS não carregou");
+}
+if (!window.SUPABASE_CONFIG?.url || !window.SUPABASE_CONFIG?.anonKey) {
+  toast("Configuração do Supabase não encontrada.", true);
+  throw new Error("Configuração do Supabase ausente");
+}
+const supabase = window.supabase.createClient(window.SUPABASE_CONFIG.url, window.SUPABASE_CONFIG.anonKey);
 
 $("loginForm").addEventListener("submit", async (e)=>{
   e.preventDefault();
